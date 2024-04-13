@@ -4,19 +4,15 @@ body{
     display:flex;
     justify-content: center;
 }
-.main-block{
-    width: 500px;
+main{
+    max-width: 100%;
+    padding:20px;
+    box-sizing: border-box;
     background-color:#F0FDF4;
     display:flex;
     justify-content: center;
 }
-.container{
-    margin:20px;
-    min-width: fit-content;
-    max-width: 500px;
-    background-color:#F0FDF4;
-    height:100vh;
-}
+
 
 .montserrat {
     font-family: "Montserrat", sans-serif;
@@ -26,12 +22,17 @@ body{
 }
 
 .truncated {
-    white-space: nowrap; /* Забороняє перенесення тексту на новий рядок */
-    overflow: hidden; /* Ховає текст, який виходить за межі контейнера */
-    text-overflow: ellipsis; /* Додає три крапки, якщо текст обрізаний */
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
 }
 
-.dark-green-bg{
+.customized-button{
+    background-color:#FFF ;
+    color:#16A34A;
+    border: 2px solid #16A34A;
+}
+.customized-button:hover{
     background-color:#16A34A ;
     color:#FFF;
 }
@@ -44,4 +45,10 @@ body{
 .white-bg-black-cl{
     background-color:#FFF ;
     color: #000f03;;
+}
+
+.card-info{
+    display:flex;
+    justify-content: center;
+    background-color: #FFF;
 }

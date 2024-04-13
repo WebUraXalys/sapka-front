@@ -5,44 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Юридична допомога</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="styles//style.css">
+    <link rel="stylesheet" href="styles/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="./app.js"></script>
+    <script>
+      tailwind.config={
+        theme: {
+          screens: {
+            'sm': '350px',
+            'md': '420px',
+            'lg': '500px',
+          },
+        }
+      }
+    </script>
 </head>
 <body>
-<div class="main-block">
+<main>
     <div class="container">
 
         <div class="flex justify-center mb-5">
           <img src="images/logo_believe.svg" alt="Logo">
         </div>
 
-        <div>
+        <div >
           <p class="montserrat text-[24px] mb-5">Потрібна допомога?<br> Звертайся</p>
-          <label class="input input-bordered flex items-center gap-2 mb-5">
+
+          <label class="input input-bordered flex items-center gap-2 mb-5 ">
             <input type="text" class="grow" placeholder="Поспілкуймось?" />
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6 opacity-40">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
             </svg>
-            
           </label>
         </div>
         <div class="mb-5"><p>Часті запити:</p></div>
-        <div class="card card-side bg-base-50 w-screen-10 shadow-xl h-48 mb-5">
-            <figure class="w-screen-50"><img class="w-52" src="images/psychological_support.png" alt="Movie"/></figure>
-            <div class="m-5">
-              <h2 class="card-title leading-6 text-[20px]">Психологічна підтримка</h2>
-              <p class="mt-1">Можливість поспілкуватись</p>
-              <div class="card-actions justify-end">
-                <button class="btn dark-green-bg w-52 mt-5">Watch</button>
-              </div>
-            </div>
-        </div>
-        
+  
         <div class="collapse collapse-plus bg-base-200">
             <input type="radio" name="my-accordion-3" checked="checked"  /> 
             <div class="collapse-title text-xl font-medium white-bg white-bg-green-cl">
@@ -72,6 +73,6 @@
           </div>
 
     </div>
-</div>
+  </main>
 </body>
 </html>
