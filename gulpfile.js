@@ -24,7 +24,7 @@ function _build() {
         .pipe(dest('./dist'));
 
     src(['./static/**/*.{svg,jpg,png}'])
-        .pipe(gulpCopy('./dist/static'));
+        .pipe(gulpCopy('./dist'));
 }
 
 // our watch function
