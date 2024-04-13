@@ -10,5 +10,18 @@
     <script src="./app.js"></script>
 </head>
 <body>
+   <label 
+    x-data="{
+        query: ''
+    }" 
+    class="input input-bordered flex items-center gap-2">
+
+    <input type="text" class="grow" placeholder="Search" x-model="query"/>
+
+    <a href="chat.html"><span @click="reactiveMessages.send(query)" class="badge badge-info">Допомогти</span></a>
+    </label>
+    <div>
+
+    </div>
 </body>
 </html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="./app.js"></script>
+    <script>
+        document.addEventListener('alpine:init', () => {
+    const socket = new WebSocket('ws://localhost:8000/ai/wschat');
+
+    let data = { messages: [] }
+ 
+    let reactiveData = Alpine.reactive(data)
+
+    socket.onmessage = function(event) {
+        const recv = event.data;
+        reactiveData.messages
+        // let messages = $store.messages.msgs;
+        //last_message = messages[messages.length - 1];
+        console.log(recv);
+    };
+
+    Alpine.store('wschat', {
+        socket: socket,
+    })
+})
+
+    </script>
+</head>
+<body>
+    <div x-data="{query: ''}"
+    >
+      <input type="text" class="grow" placeholder="Search" x-model="query"/>
+    <button @click="$store.wschat.socket.send(JSON.stringify({role: 'user', text: query}))">submit</button>
+   </div>
+</body>
+
+</html>
