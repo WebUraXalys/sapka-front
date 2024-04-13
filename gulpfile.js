@@ -19,6 +19,9 @@ function _build() {
     // take every HTML and CSS and put them into ./dist
     src(['./src/**/*.html', './src/**/*.css'])
         .pipe(dest('./dist'));
+
+    src(['./static/**/*.svg', './static/**/*.jpg'])
+        .pipe(dest('./dist/static'));
 }
 
 // our watch function
