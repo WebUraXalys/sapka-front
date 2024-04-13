@@ -20,7 +20,7 @@ function _build() {
     src(['./src/**/*.html', './src/**/*.css'])
         .pipe(dest('./dist'));
 
-    src(['./static/**/*.svg', './static/**/*.jpg'])
+    src(['./static/**/*.svg', './static/**/*.jpg', './static/**/*.png'])
         .pipe(dest('./dist/static'));
 }
 
