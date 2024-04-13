@@ -1,16 +1,18 @@
 body{
     margin:0;
-    background-color:#F0FDF4;
+    background-color:#16A34A;
     display:flex;
     justify-content: center;
+    height:100vh;
 }
 main{
     max-width: 100%;
     padding:20px;
     box-sizing: border-box;
-    background-color:#F0FDF4;
+    background-color:#16A34A;
     display:flex;
     justify-content: center;
+    height:100vh;
 }
 
 
