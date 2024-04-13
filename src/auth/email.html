@@ -13,7 +13,7 @@
 <body>
     <div x-data="{query: ''}">
         <input type="email" class="grow" placeholder="Email" x-model="query"/>
-        <button @click="await axios.post('http://localhost:8000/auth/login?link_format='+window.location.origin+'/auth/user.html?token={key}', {email: query})">submit</button>
+        <button @click="await axios.post('http://localhost:8000/auth/login?link_format='+window.location.origin+'/auth/user.html?token={key}', {email: query}); window.location.replace('/auth/sent.html');">submit</button>
 </div>
 </body>
 </html>

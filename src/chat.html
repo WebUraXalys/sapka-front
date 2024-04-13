@@ -5,73 +5,124 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="pages/styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="./app.js"></script>
     <script>
-    window.onload = (event) => {
-        console.log("page is fully loaded");
-    };
-    document.addEventListener('alpine:init', () => {
-        const socket = new WebSocket('ws://localhost:8000/ai/wschat');
-        let tst = document.getElementById("123");
+        document.addEventListener('alpine:init', () => {
+            const socket = new WebSocket('ws://localhost:8000/ai/wschat');
+            let tst = document.getElementById("123");
+            let active_chat = Alpine.reactive({obj: tst})
 
-        let data = { messages: [] }
-    
-        let reactiveData = Alpine.reactive(data)
+            msg = decodeURIComponent((location.pathname+location.search).substr(1).split("?msg=")[1]);
+            firstmessage = document.getElementById("firstmessage");
+            firstmessage.textContent = msg;
+            
+            let data = { messages: [msg] }
+        
+            let reactiveData = Alpine.reactive(data)
 
-    socket.onmessage = function(event) {
-        const recv = event.data;
-        const recv_json = JSON.parse(recv);
-        if (recv_json["role"] == "part") {
-            tst.textContent = tst.textContent + recv_json["text"];
-        }
-        if (recv_json["role"] == "finished") {
-            reactiveData.messages.push(recv_json["text"]);
-        }
-        if (recv_json["role"] == "end") {
-            alert("not implemented in front")
-        }
-    };
+            socket.onmessage = function(event) {
+                const recv = event.data;
+                const recv_json = JSON.parse(recv);
+                if (recv_json["role"] == "part") {
 
-        Alpine.store('wschat', {
-            socket: socket,
-            messages: reactiveData,
-            inputParams: (location.pathname+location.search).substr(1)
+                    active_chat.obj.textContent = active_chat.obj.textContent + recv_json["text"];
+                }
+                if (recv_json["role"] == "finished") {
+                    reactiveData.messages.push(recv_json["text"]);
+                }
+                if (recv_json["role"] == "end") {
+                    alert("not implemented in front")
+                }
+            };
+
+            Alpine.store('wschat', {
+                socket: socket,
+                messages: reactiveData,
+                inputParams: (location.pathname+location.search).substr(1),
+                msg: msg,
+                active_chat: active_chat,
+            })
+            socket.onopen = function (event) {
+                socket.send(JSON.stringify({role: 'user', text: msg}));
+            }
+
         })
-    })
     </script>
 </head>
 <body>
-    <div x-data="{query: ''}"
-    >
-      <input type="text" class="grow" placeholder="Search" x-model="query"/>
-    <button @click="$store.wschat.messages.messages.push(query); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''">submit</button>
-   <!-- <div id="123"></div> -->
-   <button @click="console.log($store.wschat.inputParams)">adasfasfas</button>
-   <div class="card w-96 bg-base-100 shadow-xl">
-       <div class="card-body">
-           <h2 class="card-title">Асистент Віра</h2>
-           <button x-data
-               x-init="$nextTick(() => {$store.wschat.messages.messages.push(query); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''}})"
-               class="m-4 bg-green-500 text-lg font-bold p-6 py-2 text-white shadow-md rounded">
-               Success
-           </button>
-           <!-- <div class="card-actions justify-end">
-               <button class="btn btn-primary">Buy Now</button>
-           </div> -->
-       </div>
-   </div>
-   <div class="card w-96 bg-base-100 shadow-xl">
-       <div class="card-body">
-           <h2 class="card-title">Асистент Віра</h2>
-           <p id="123"></p>
-           <!-- <div class="card-actions justify-end">
-               <button class="btn btn-primary">Buy Now</button>
-           </div> -->
-       </div>
-   </div>
+<div class="main-block">
+    <div class="container" x-data="{messages: $store.wschat.messages.messages}">
+        <div class="flex justify-center mb-5">
+            <img src="static/images/logo_believe.svg" alt="Logo">
+        </div>
+        <div x-data="{query: ''}">
+            <input type="text" class="grow" placeholder="Search" x-model="query" />
+            <button
+                @click="$store.wschat.messages.messages.push(query); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''">submit</button>
+        </div>
+        <div class="chat chat-end">
+                <div class="chat-image avatar">
+                    <div class="w-10 rounded-full">
+                        <img alt="Tailwind CSS chat bubble component"
+                            src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    </div>
+                </div>
+                <!-- <button @click="$store.wschat.messages.messages.push('adsasdasdasd'); console.log($store.wschat.active_chat)">TESTTTSTTTSDF</button> -->
+                <div class="chat-header">
+                    Ви
+                </div>
+                <div class="chat-bubble" id="firstmessage"></div>
+            </div>
+            <div class="chat chat-start">
+                <div class="chat-image avatar">
+                    <div class="w-10 rounded-full">
+                        <img alt="Tailwind CSS chat bubble component"
+                            src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    </div>
+                </div>
+                <div class="chat-header">
+                    Віра Асистент
+                </div>
+                <div class="chat-bubble" id="123"></div>
+            </div>
+            <template x-for="(message, i) in messages">
+                <template x-if="i > 1 && i%2==0">
+                    <div>
+                        <div class="chat chat-end">
+                            <div class="chat-image avatar">
+                                <div class="w-10 rounded-full">
+                                    <img alt="Tailwind CSS chat bubble component"
+                                        src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                </div>
+                            </div>
+                            <div class="chat-header">Ви</div>
+                            <div class="chat-bubble" x-text="message"></div>
+                        </div>
+                        <div class="chat chat-start">
+                            <div class="chat-image avatar">
+                                <div class="w-10 rounded-full">
+                                    <img alt="Tailwind CSS chat bubble component"
+                                        src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                </div>
+                            </div>
+                            <div class="chat-header">Віра Асистент</div>
+                            <div class="chat-bubble" x-init="let cbs = document.querySelectorAll('.chat-bubble'); $store.wschat.active_chat.obj = cbs[cbs.length - 1]"></div>
+                        </div>
+                    </div>
+                </template>
+            </template>
+
+            
+        </div>
+        
+    </div>
 </div>
 </body>
-
 </html>
