@@ -49,9 +49,9 @@
                 msg: msg,
                 active_chat: active_chat,
             })
-            socket.onopen = function (event) {
-                socket.send(JSON.stringify({role: 'user', text: msg}));
-            }
+            // socket.onopen = function (event) {
+            //     socket.send(JSON.stringify({role: 'user', text: msg}));
+            // }
 
         })
     </script>
@@ -78,7 +78,7 @@
                 <div class="chat-header">
                     Ви
                 </div>
-                <div class="chat-bubble" id="firstmessage"></div>
+                <div class="btn btn-primary" id="firstmessage"></div>
             </div>
             <div class="chat chat-start">
                 <div class="chat-image avatar">
