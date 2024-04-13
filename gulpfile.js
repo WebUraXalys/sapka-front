@@ -16,10 +16,6 @@ function _build() {
         .pipe(bro())
         .pipe(dest('./dist'));
 
-    // take every JS script, and put them into ./dist
-    src('./src/scripts/**/*.js')
-        .pipe(dest('./dist'));
-
     // take every HTML and CSS and put them into ./dist
     src(['./src/**/*.html', './src/**/*.css'])
         .pipe(dest('./dist'));
