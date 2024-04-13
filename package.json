@@ -23,6 +23,7 @@
     "async-done": "^2.0.0",
     "async-each-series": "^0.1.1",
     "async-settle": "^2.0.0",
+    "axios": "^1.6.8",
     "bach": "^2.0.1",
     "balanced-match": "^1.0.2",
     "bare-events": "^2.2.2",
