@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="pages/styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="./app.js"></script>
@@ -43,35 +48,47 @@
     </script>
 </head>
 <body>
-    <div x-data="{query: ''}"
-    >
-      <input type="text" class="grow" placeholder="Search" x-model="query"/>
-    <button @click="$store.wschat.messages.messages.push(query); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''">submit</button>
-   <!-- <div id="123"></div> -->
-   <button @click="console.log($store.wschat.inputParams)">adasfasfas</button>
-   <div class="card w-96 bg-base-100 shadow-xl">
-       <div class="card-body">
-           <h2 class="card-title">Асистент Віра</h2>
-           <button x-data
-               x-init="$nextTick(() => {$store.wschat.messages.messages.push(query); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''}})"
-               class="m-4 bg-green-500 text-lg font-bold p-6 py-2 text-white shadow-md rounded">
-               Success
-           </button>
-           <!-- <div class="card-actions justify-end">
-               <button class="btn btn-primary">Buy Now</button>
-           </div> -->
-       </div>
-   </div>
-   <div class="card w-96 bg-base-100 shadow-xl">
-       <div class="card-body">
-           <h2 class="card-title">Асистент Віра</h2>
-           <p id="123"></p>
-           <!-- <div class="card-actions justify-end">
-               <button class="btn btn-primary">Buy Now</button>
-           </div> -->
-       </div>
-   </div>
+<div class="main-block">
+    <div class="container">
+        <div class="flex justify-center mb-5">
+            <img src="static/images/logo_believe.svg" alt="Logo">
+        </div>
+        <div x-data="{query: ''}">
+            <input type="text" class="grow" placeholder="Search" x-model="query" />
+            <button
+                @click="$store.wschat.messages.messages.push(query); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''">submit</button>
+        </div>
+        <div class="chat">
+            
+        </div>
+            <div class="chat chat-end">
+                <div class="chat-image avatar">
+                    <div class="w-10 rounded-full">
+                        <img alt="Tailwind CSS chat bubble component"
+                            src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    </div>
+                </div>
+                <div class="chat-header">
+                    Ви
+                </div>
+                <div class="chat-bubble">I hate you!</div>
+            </div>
+            <div class="chat chat-start">
+                <div class="chat-image avatar">
+                    <div class="w-10 rounded-full">
+                        <img alt="Tailwind CSS chat bubble component"
+                            src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    </div>
+                </div>
+                <div class="chat-header">
+                    Віра Асистент
+                </div>
+                <div class="chat-bubble" id="123">You were the Chosen One!</div>
+            </div>
+            
+        </div>
+        
+    </div>
 </div>
 </body>
-
 </html>
