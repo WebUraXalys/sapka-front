@@ -7,24 +7,29 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="/app.js"></script>
+    <!-- <script src="/app.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-        document.addEventListener('alpine:init', async () => {
+        async function getuser() {
             let tok = (location.pathname+location.search).substr(1).split('?token=')[1];
-            Alpine.store('url', {
-                token: tok,
-            })
-            req = axios.get("http://localhost:8000/auth/user?key="+tok).then(function (resp) {
-                console.log(resp);
-                console.log(resp.data)
+            return await axios.get("http://localhost:8000/auth/user?key="+tok).then(function (resp) {
+                return resp.data;
             });
-            console.log(req)
-        })
+        }
+        // document.addEventListener('alpine:init', () => {
+
+        //     x = Alpine.store('user', {
+        //         test: "sdfsf",
+        //     })
+        //     console.log(x);
+        // })
     </script>
 </head>
 <body>
-    <div x-data="{token: $store.url.token}" x-text="token"></div>
+    <div x-data="{user: undefined}" x-init="user = await getuser()">
+
+        <div x-show="user?.success" class="text-xl"> ВХІД УСПІШНИЙ <span x-text="user?.username"></span></div>
+    </div>
 </body>
 </html>
