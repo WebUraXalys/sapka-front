@@ -9,13 +9,13 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="./app.js"></script>
     <script>
-        document.addEventListener('alpine:init', () => {
-    const socket = new WebSocket('ws://localhost:8000/ai/wschat');
-    let tst = document.getElementById("123");
+    document.addEventListener('alpine:init', () => {
+        const socket = new WebSocket('ws://localhost:8000/ai/wschat');
+        let tst = document.getElementById("123");
 
-    let data = { messages: [] }
- 
-    let reactiveData = Alpine.reactive(data)
+        let data = { messages: [] }
+    
+        let reactiveData = Alpine.reactive(data)
 
     socket.onmessage = function(event) {
         const recv = event.data;
@@ -31,12 +31,12 @@
         }
     };
 
-    Alpine.store('wschat', {
-        socket: socket,
-        messages: reactiveData
+        Alpine.store('wschat', {
+            socket: socket,
+            messages: reactiveData,
+            inputParams: (location.pathname+location.search).substr(1)
+        })
     })
-})
-
     </script>
 </head>
 <body>
@@ -44,7 +44,17 @@
     >
       <input type="text" class="grow" placeholder="Search" x-model="query"/>
     <button @click="$store.wschat.messages.messages.push(query); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''">submit</button>
-   <div id="123"></div>
+   <!-- <div id="123"></div> -->
+   <button @click="console.log($store.wschat.inputParams)">adasfasfas</button>
+   <div class="card w-96 bg-base-100 shadow-xl">
+       <div class="card-body">
+           <h2 class="card-title">Асистент Віра</h2>
+           <p id="123"></p>
+           <!-- <div class="card-actions justify-end">
+               <button class="btn btn-primary">Buy Now</button>
+           </div> -->
+       </div>
+   </div>
 </div>
 </body>
 

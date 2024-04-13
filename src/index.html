@@ -18,7 +18,7 @@
 
     <input type="text" class="grow" placeholder="Search" x-model="query"/>
 
-    <a href="chat.html?msg={q}"><span @click="reactiveMessages.send(query)" class="badge badge-info">Допомогти</span></a>
+    <a x-bind:href="'chat.html?msg=' + query"><span @click="reactiveMessages.send(query)" class="badge badge-info">Допомогти</span></a>
     </label>
     <div>
 
