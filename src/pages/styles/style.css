@@ -1,6 +1,6 @@
 body{
     margin:0;
-    background-color: #F0FDF4;
+    background-color: #FFF;
     display:flex;
     justify-content: center;
 }
@@ -16,4 +16,32 @@ body{
     max-width: 500px;
     background-color:#F0FDF4;
     height:100vh;
+}
+
+.montserrat {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.truncated {
+    white-space: nowrap; /* Забороняє перенесення тексту на новий рядок */
+    overflow: hidden; /* Ховає текст, який виходить за межі контейнера */
+    text-overflow: ellipsis; /* Додає три крапки, якщо текст обрізаний */
+}
+
+.dark-green-bg{
+    background-color:#16A34A ;
+    color:#FFF;
+}
+
+.white-bg-green-cl{
+    background-color:#FFF ;
+    color:#16A34A;
+}
+
+.white-bg-black-cl{
+    background-color:#FFF ;
+    color: #000f03;;
 }
