@@ -11,6 +11,7 @@
     <script>
         document.addEventListener('alpine:init', () => {
     const socket = new WebSocket('ws://localhost:8000/ai/wschat');
+    let tst = document.getElementById("123");
 
     let data = { messages: [] }
  
@@ -18,14 +19,21 @@
 
     socket.onmessage = function(event) {
         const recv = event.data;
-        reactiveData.messages
-        // let messages = $store.messages.msgs;
-        //last_message = messages[messages.length - 1];
-        console.log(recv);
+        const recv_json = JSON.parse(recv);
+        if (recv_json["role"] == "part") {
+            tst.textContent = tst.textContent + recv_json["text"];
+        }
+        if (recv_json["role"] == "finished") {
+            reactiveData.messages.push(recv_json["text"]);
+        }
+        if (recv_json["role"] == "end") {
+            alert("not implemented in front")
+        }
     };
 
     Alpine.store('wschat', {
         socket: socket,
+        messages: reactiveData
     })
 })
 
@@ -35,8 +43,9 @@
     <div x-data="{query: ''}"
     >
       <input type="text" class="grow" placeholder="Search" x-model="query"/>
-    <button @click="$store.wschat.socket.send(JSON.stringify({role: 'user', text: query}))">submit</button>
-   </div>
+    <button @click="$store.wschat.messages.messages.push(query); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''">submit</button>
+   <div id="123"></div>
+</div>
 </body>
 
 </html>
