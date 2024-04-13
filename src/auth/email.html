@@ -8,11 +8,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="./app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <div x-data="{query: ''}">
-        <input type="text" class="grow" placeholder="Search" x-model="query"/>
-        <button @click="axios.">submit</button>
+        <input type="email" class="grow" placeholder="Email" x-model="query"/>
+        <button @click="await axios.post('http://localhost:8000/auth/login?link_format='+window.location.origin+'/auth/user.html?token={key}', {email: query})">submit</button>
 </div>
 </body>
 </html>
