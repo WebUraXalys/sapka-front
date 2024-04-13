@@ -17,23 +17,19 @@
     
         let reactiveData = Alpine.reactive(data)
 
-        socket.onmessage = function(event) {
-            const recv = event.data;
-            const recv_json = JSON.parse(recv);
-            if (recv_json["role"] == "part") {
-                tst.textContent = tst.textContent + recv_json["text"];
-            }
-            if (recv_json["role"] == "finished") {
-                reactiveData.messages.push(recv_json["text"]);
-            }
-            
-            // if (reactiveData.messages.length < 1) {
-            //     reactiveData.messages.push(recv);
-            //     reactiveData.messages.push(recv);
-            // }
-            // let messages = $store.messages.msgs;
-            //last_message = messages[messages.length - 1];
-        };
+    socket.onmessage = function(event) {
+        const recv = event.data;
+        const recv_json = JSON.parse(recv);
+        if (recv_json["role"] == "part") {
+            tst.textContent = tst.textContent + recv_json["text"];
+        }
+        if (recv_json["role"] == "finished") {
+            reactiveData.messages.push(recv_json["text"]);
+        }
+        if (recv_json["role"] == "end") {
+            alert("not implemented in front")
+        }
+    };
 
         Alpine.store('wschat', {
             socket: socket,
