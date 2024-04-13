@@ -1,10 +1,13 @@
 // src and dest are for moving files
 // watch is for Gulp to trigger tasks anytime the watched files are modified
 // task is to register a task in Gulp
+const { read } = require('fs');
 const { src, dest, watch, task } = require('gulp');
+const gulpCopy = require('gulp-copy');
 
 // bro is for browserify
 const bro = require('gulp-bro');
+const { buffer } = require('stream/consumers');
 
 // browserSync
 const browserSync = require('browser-sync').create();
@@ -21,7 +24,7 @@ function _build() {
         .pipe(dest('./dist'));
 
     src(['./static/**/*.{svg,jpg,png}'])
-        .pipe(dest('./dist/static'));
+        .pipe(gulpCopy('./dist/static'));
 }
 
 // our watch function
