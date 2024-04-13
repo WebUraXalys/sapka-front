@@ -26,13 +26,9 @@
         if (recv_json["role"] == "finished") {
             reactiveData.messages.push(recv_json["text"]);
         }
-        
-        // if (reactiveData.messages.length < 1) {
-        //     reactiveData.messages.push(recv);
-        //     reactiveData.messages.push(recv);
-        // }
-        // let messages = $store.messages.msgs;
-        //last_message = messages[messages.length - 1];
+        if (recv_json["role"] == "end") {
+            alert("not implemented in front")
+        }
     };
 
     Alpine.store('wschat', {
