@@ -46,7 +46,7 @@
         </div>
         <div x-data="{user: undefined}" x-init="user = await getuser()">
 
-            <div x-show="user?.success" class="text-xl"> ВХІД УСПІШНИЙ <span x-text="user?.username"></span></div>
+            <div x-show="user?.success" class="text-xl"> Вітаємо, <span x-text="user?.username"></span><br></div>
         </div>
 
 
