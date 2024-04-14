@@ -13,6 +13,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+    </script>
 </head>
 <body>
     <main>
@@ -33,7 +35,7 @@
                 x-data="{query: ''}">
                 <input type="text" class="grow" placeholder="Email" x-model="query" />
                 <a
-                    @click="await axios.post('http://localhost:8000/auth/login?link_format='+window.location.origin+'/auth/user.html?token={key}', {email: query}); window.location.replace('/auth/sent.html');">
+                    @click="await axios.post('http://localhost:8000/auth/login?link_format='+window.location.origin+'/auth/user.html?token={key}', {email: query, rid: (location.pathname+location.search).substr(1).split('?rid=')[1];}); window.location.replace('/auth/sent.html');">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1"
                         stroke="currentColor" class="w-6 h-6 opacity-40">
                         <path stroke-linecap="round" stroke-linejoin="round"
