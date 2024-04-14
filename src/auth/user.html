@@ -18,7 +18,7 @@
     <script>
         async function getuser() {
             let tok = (location.pathname+location.search).substr(1).split('?token=')[1];
-            return await axios.get("http://localhost:8000/auth/user?key="+tok).then(function (resp) {
+            return await axios.get("https://vira-api.ig4er.link/auth/user?key="+tok).then(function (resp) {
                 return resp.data;
             });
         }
