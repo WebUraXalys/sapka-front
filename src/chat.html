@@ -15,7 +15,7 @@
     <script src="./app.js"></script>
     <script>
         document.addEventListener('alpine:init', () => {
-            const socket = new WebSocket('ws://localhost:8000/ai/wschat');
+            const socket = new WebSocket('wss://vira-api.ig4er.link/ai/wschat');
             let tst = document.getElementById("123");
             let active_chat = Alpine.reactive({obj: tst})
 
@@ -79,7 +79,7 @@
         }
     </script>
 </head>
-<body>
+<body class="h-[100vh]">
 <div class="main-block">
     <div class="container max-h-[95vh]" x-data="{messages: $store.wschat.messages.messages, report: $store.wschat.report}">
         <div class="flex justify-between mb-5">
