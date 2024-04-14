@@ -364,7 +364,8 @@
     "yargs-parser": "^20.2.9"
   },
   "scripts": {
-    "serve": "gulp serve"
+    "serve": "gulp serve",
+    "build": "gulp build"
   },
   "author": "",
   "license": "ISC"
