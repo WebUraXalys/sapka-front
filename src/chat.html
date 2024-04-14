@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,6 +27,7 @@
         
             let reactiveData = Alpine.reactive(data)
             let button_state = Alpine.reactive({disable: true, consult: false})
+            let report = Alpine.reactive({id: null})
 
             socket.onmessage = function(event) {
                 const recv = event.data;
@@ -39,9 +40,13 @@
                     button_state.disable = false;
                 }
                 if (recv_json["role"] == "end") {
-                    reactiveData.messages.push({role: recv_json["role"], text: recv_json["text"]});
+                    report.id = recv_json["text"];
+                    // reactiveData.messages.push({role: recv_json["role"], text: recv_json["text"]});
                     button_state.disable = true;
                     button_state.consult = true;
+                }
+                if (recv_json["role"] == "lock") {
+                    button_state.disable = true;
                 }
             };
 
@@ -53,6 +58,7 @@
                 msg: msg,
                 active_chat: active_chat,
                 button_state: button_state,
+                report: report,
             })
             socket.onopen = function (event) {
                 socket.send(JSON.stringify({role: 'user', text: msg}));
@@ -60,18 +66,33 @@
 
         })
     </script>
+    <script>
+        tailwind.config={
+            theme: {
+                screens: {
+                'sm': '350px',
+                'md': '420px',
+                'kg': '460px',
+                'lg': '500px',
+                },
+            }
+        }
+    </script>
 </head>
 <body>
 <div class="main-block">
-    <div class="container" x-data="{messages: $store.wschat.messages.messages}">
-        <div class="flex justify-center mb-5">
-            <img src="static/images/logo_believe.svg" alt="Logo">
+    <div class="container max-h-[95vh]" x-data="{messages: $store.wschat.messages.messages, report: $store.wschat.report}">
+        <div class="flex justify-between mb-5">
+            <a href="index.html"><img src="static/images/logo_believe.svg" alt="Logo"></a>
+            <button class="btn btn-square btn-ghost">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    class="inline-block w-5 h-5 stroke-current">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
         </div>
-        <div x-data="{query: ''}">
-            <input type="text" class="grow" placeholder="Search" x-model="query" />
-            <button x-bind:disabled="$store.wschat.button_state.disable"
-                @click="$store.wschat.button_state.disable = true; $store.wschat.messages.messages.push({role: 'user', text: query}); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''">submit</button>
-        </div>
+        <div class="contain overflow-y-scroll h-[500px]">
         <div class="chat chat-end">
                 <div class="chat-image avatar">
                     <div class="w-10 rounded-full">
@@ -112,7 +133,7 @@
                         </div>
                         <div class="chat chat-start">
                             <div class="chat-image avatar">
-                                <div class="w-10 rounded-full">
+                                <div class="w-10 runded-full">
                                     <img alt="Tailwind CSS chat bubble component"
                                         src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                                 </div>
@@ -123,11 +144,24 @@
                     </div>
                 </template>
             </template>
-            <div x-show="$store.wschat.button_state.consult" class="btn customized-button w-52 mt-5">Консультація з психологом</div>
-
+            <a x-show="report.id !== null" x-bind:href="'auth/email.html?rid=' + report.id"><div x-show="$store.wschat.button_state.consult" class="btn customized-button w-52 mt-5">Консультація з психологом</div></a>
+            </div>
             
         </div>
-        
+
+        <label class="input input-bordered flex items-center w-[440px] kg:w-[420px] md:w-[400px] sm:w-[330px] fixed bottom-3" x-data="{query: ''}">
+            <input type="text" class="grow" placeholder="Поспілкуймось?" x-model="query"
+                @keydown.enter="$store.wschat.button_state.disable; $store.wschat.messages.messages.push({role: 'user', text: query}); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''" />
+            <button x-bind:disabled="$store.wschat.button_state.disable"
+                @click="$store.wschat.button_state.disable = true; $store.wschat.messages.messages.push({role: 'user', text: query}); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1"
+                    stroke="currentColor" class="w-6 h-6 opacity-40">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                </svg>
+            </button>
+        </label>
+        </div>
     </div>
 </div>
 </body>
