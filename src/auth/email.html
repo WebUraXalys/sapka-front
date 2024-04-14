@@ -14,11 +14,22 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
+        async function sendmail(mail, rid) {
+            return await axios.post('http://localhost:8000/auth/login?link_format='+window.location.origin+'/auth/user.html?token={key}', {email: mail, rid: rid})
+            .then(function (r) {return r.data.success})
+            .catch(function (err) {return false});
+        }
+        document.addEventListener('alpine:init', () => {
+            let rid = (location.pathname+location.search).substr(1).split('?rid=')[1];
+            Alpine.store('rid', {
+                rid: rid !== undefined ? rid : null
+            })
+        })
     </script>
 </head>
 <body>
     <main>
-        <div class="container mp-0">
+        <div x-data="{query: '', err: false}" class="container mp-0">
             <div class="flex justify-between mb-5">
                 <a href="../index.html"><img src="../static/images/logo_believe.svg" alt="Logo"></a>
                 <button class="btn btn-square btn-ghost">
@@ -30,19 +41,19 @@
                     </svg>
                 </button>
             </div>
-            <label
-                class="input input-bordered flex items-center gap-2"
-                x-data="{query: ''}">
+            <label x-show="$store.rid.rid !== null"
+                class="input input-bordered flex items-center gap-2">
                 <input type="text" class="grow" placeholder="Email" x-model="query" />
-                <a
-                    @click="await axios.post('http://localhost:8000/auth/login?link_format='+window.location.origin+'/auth/user.html?token={key}', {email: query, rid: (location.pathname+location.search).substr(1).split('?rid=')[1];}); window.location.replace('/auth/sent.html');">
+                <button
+                    @click="err = false; (await sendmail(query, (location.pathname+location.search).substr(1).split('?rid=')[1])) ? window.location.replace('/auth/sent.html') : err = true">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1"
                         stroke="currentColor" class="w-6 h-6 opacity-40">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
                     </svg>
-                </a>
+                </button>
             </label>
+            <div class="text-xl" x-show="err">ПОМИЛКА</div>
         </div>
     </main>
 </body>

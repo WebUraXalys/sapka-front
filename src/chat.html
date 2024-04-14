@@ -41,9 +41,12 @@
                 }
                 if (recv_json["role"] == "end") {
                     report.id = recv_json["text"];
-                    reactiveData.messages.push({role: recv_json["role"], text: recv_json["text"]});
+                    // reactiveData.messages.push({role: recv_json["role"], text: recv_json["text"]});
                     button_state.disable = true;
                     button_state.consult = true;
+                }
+                if (recv_json["role"] == "lock") {
+                    button_state.disable = true;
                 }
             };
 
@@ -141,22 +144,22 @@
                     </div>
                 </template>
             </template>
-            <a x-show="report.id !== null" x-bind:href="'auth/email?rid=' + report.id"><div x-show="$store.wschat.button_state.consult" class="btn customized-button w-52 mt-5">Консультація з психологом</div></a>
+            <a x-show="report.id !== null" x-bind:href="'auth/email.html?rid=' + report.id"><div x-show="$store.wschat.button_state.consult" class="btn customized-button w-52 mt-5">Консультація з психологом</div></a>
             </div>
             
         </div>
 
         <label class="input input-bordered flex items-center w-[440px] kg:w-[420px] md:w-[400px] sm:w-[330px] fixed bottom-3" x-data="{query: ''}">
             <input type="text" class="grow" placeholder="Поспілкуймось?" x-model="query"
-                @keydown.enter="$store.wschat.button_state.disable = true; $store.wschat.messages.messages.push({role: 'user', text: query}); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''" />
-            <a x-bind:disabled="$store.wschat.button_state.disable"
+                @keydown.enter="$store.wschat.button_state.disable; $store.wschat.messages.messages.push({role: 'user', text: query}); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''" />
+            <button x-bind:disabled="$store.wschat.button_state.disable"
                 @click="$store.wschat.button_state.disable = true; $store.wschat.messages.messages.push({role: 'user', text: query}); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1"
                     stroke="currentColor" class="w-6 h-6 opacity-40">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
                 </svg>
-            </a>
+            </button>
         </label>
         </div>
     </div>
