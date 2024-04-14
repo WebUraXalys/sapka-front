@@ -3,6 +3,7 @@
 // task is to register a task in Gulp
 const { read } = require('fs');
 const { src, dest, watch, task } = require('gulp');
+const { exec } = require('child_process');
 const gulpCopy = require('gulp-copy');
 
 // bro is for browserify
@@ -26,7 +27,6 @@ function _build() {
     src(['./static/**/*.{svg,jpg,png}'])
         .pipe(gulpCopy('./dist'));
 }
-
 // our watch function
 function _watch() {
     watch(['src/*/*.js', 'src/**/*.html']).on('change', _build);
@@ -46,4 +46,7 @@ function _serve() {
 // registering a 'serve' task so we can trigger the building and serving with
 // gulp serve
 task('serve', _serve);
-task('build', _build);
+task('build', function b() {
+    _build();
+    return exec('date');
+});
