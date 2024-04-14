@@ -3,12 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Пошук житла</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="./app.js"></script>
+    <script>
+      tailwind.config={
+        theme: {
+          screens: {
+            'sm': '350px',
+            'md': '420px',
+            'lg': '500px',
+          },
+        }
+      }
+    </script>
 </head>
 <body>
-    <div x-data="{query: ''}">
-      <input type="text" class="grow" placeholder="Search" x-model="query"/>
+<main>
+    <div class="container">
 
-   </div>
+        <div class="flex justify-center mb-5">
+          <img src="../../static/images/logo_believe.svg" alt="Logo">
+        </div>
+
+        <div >
+          <p class="montserrat text-[24px] mb-5">Шукаєш житло?<br> Звертайся</p>
+
+        <div class="my-5"><p>Часті запитання:</p></div>
+        <div class="collapse collapse-plus bg-base-200 mb-4">
+            <input type="radio" name="my-accordion-3" checked="checked"  /> 
+            <div class="collapse-title text-xl font-medium white-bg-green-cl">
+                <h2>Військовий психолог</h2>
+            </div>
+            <div class="collapse-content white-bg-black-cl"> 
+              <p>- це фахівець, який надає психологічну підтримку військовослужбовцям. Вони допомагають зберегти психічне здоров'я військових у складних ситуаціях, таких як бойові дії, відновлення після травм або переходу до мирного життя після війни. Військовий психолог надає консультації, психотерапію та підтримку, сприяючи зниженню стресу, підвищенню відчуття самоповаги та збереженню оптимального функціонування в складних умовах. Їхня робота допомагає зберегти бойовий потенціал та забезпечити здорове фізичне та психічне становище військових персоналів</p>
+            </div>
+        </div>
+
+        <div class="collapse collapse-plus bg-base-200 mb-4">
+          <input type="radio" name="my-accordion-3" /> 
+          <div class="collapse-title text-xl font-medium white-bg-green-cl">
+            <h2>Дитячий присхолог</h2>
+          </div>
+          <div class="collapse-content white-bg-black-cl"> 
+            <p>- це спеціаліст, який забезпечує психологічну підтримку дітям військовослужбовців та їх родинам. Вони допомагають дітям адаптуватися до особливостей життя під час війни, розуміти та впоратися з емоційними труднощами, пов'язаними з розлукою, переїздами, стресом від відсутності батька або матері через російську агресію. Військовий дитячий психолог надає консультації, проводить групові та індивідуальні сесії, сприяючи психологічній стабільності та забезпечуючи здоровий розвиток дітей військових родин. Їхня робота спрямована на підтримку дитячого благополуччя та забезпечення адаптації до особливостей середовища.</p>
+          </div>
+        </div>
+
+        <div class="collapse collapse-plus bg-base-200 mb-4">
+          <input type="radio" name="my-accordion-3" /> 
+          <div class="collapse-title text-xl font-medium white-bg-green-cl">
+            <h2>Психолог для дорослих </h2>
+          </div>
+          <div class="collapse-content white-bg-black-cl"> 
+            <p>-це спеціаліст, який надає психологічну підтримку внутрішньо переміщеним особам та тим, хто постраждав від війни.</p>
+          </div>
+      </div>
+
+        <div class="collapse collapse-plus bg-base-200 mb-4">
+            <input type="radio" name="my-accordion-3" /> 
+            <div class="collapse-title text-xl font-medium white-bg-green-cl">
+              <h2>Соціальний психолог</h2>
+            </div>
+            <div class="collapse-content white-bg-black-cl"> 
+              <p>- це фахівець, що надає психологічну підтримку та консультування, щоб допомогти людям, що постраждали від війни, впоратися з емоційними та соціальними викликами, з якими вони можуть зіткнутися. Це може включати роботу з посттравматичним стресовим розладом, адаптацію до нових ролей у сім'ї та суспільстві, пошук роботи та встановлення міжособистісних відносин. Шляхом сприяння психологічній адаптації та підтримки соціальної інтеграції, соціальні психологи допомагають людям знайти новий зміст і задоволення в житті після пережитого стресу.</p>
+            </div>
+        </div>
+
+    </div>
+  </main>
+  <footer></footer>
 </body>
 </html>
