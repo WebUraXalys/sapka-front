@@ -46,3 +46,4 @@ function _serve() {
 // registering a 'serve' task so we can trigger the building and serving with
 // gulp serve
 task('serve', _serve);
+task('build', _build);
