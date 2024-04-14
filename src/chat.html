@@ -27,6 +27,7 @@
         
             let reactiveData = Alpine.reactive(data)
             let button_state = Alpine.reactive({disable: true, consult: false})
+            let report = Alpine.reactive({id: null})
 
             socket.onmessage = function(event) {
                 const recv = event.data;
@@ -39,6 +40,7 @@
                     button_state.disable = false;
                 }
                 if (recv_json["role"] == "end") {
+                    report.id = recv_json["text"];
                     reactiveData.messages.push({role: recv_json["role"], text: recv_json["text"]});
                     button_state.disable = true;
                     button_state.consult = true;
@@ -53,10 +55,11 @@
                 msg: msg,
                 active_chat: active_chat,
                 button_state: button_state,
+                report: report,
             })
-            // socket.onopen = function (event) {
-            //     socket.send(JSON.stringify({role: 'user', text: msg}));
-            // }
+            socket.onopen = function (event) {
+                socket.send(JSON.stringify({role: 'user', text: msg}));
+            }
 
         })
     </script>
@@ -75,7 +78,7 @@
 </head>
 <body>
 <div class="main-block">
-    <div class="container max-h-[95vh]" x-data="{messages: $store.wschat.messages.messages}">
+    <div class="container max-h-[95vh]" x-data="{messages: $store.wschat.messages.messages, report: $store.wschat.report}">
         <div class="flex justify-between mb-5">
             <a href="index.html"><img src="static/images/logo_believe.svg" alt="Logo"></a>
             <button class="btn btn-square btn-ghost">
@@ -138,7 +141,7 @@
                     </div>
                 </template>
             </template>
-            <div x-show="$store.wschat.button_state.consult" class="btn customized-button w-52 mt-5">Консультація з психологом</div>
+            <a x-show="report.id !== null" x-bind:href="'auth/email?rid=' + report.id"><div x-show="$store.wschat.button_state.consult" class="btn customized-button w-52 mt-5">Консультація з психологом</div></a>
             </div>
             
         </div>
