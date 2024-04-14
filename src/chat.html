@@ -149,7 +149,7 @@
             
         </div>
 
-        <label class="input input-bordered flex items-center w-[440px] kg:w-[420px] md:w-[400px] sm:w-[330px] fixed bottom-3" x-data="{query: ''}">
+        <label class="inset-x-0 mx-auto input input-bordered flex items-center w-[440px] kg:w-[420px] md:w-[400px] sm:w-[330px] fixed bottom-3" x-data="{query: ''}">
             <input type="text" class="grow" placeholder="Поспілкуймось?" x-model="query"
                 @keydown.enter="$store.wschat.button_state.disable ? null : $store.wschat.messages.messages.push({role: 'user', text: query}); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''" />
             <button x-bind:disabled="$store.wschat.button_state.disable"
