@@ -3,8 +3,7 @@ body{
     background-color:#F0FDF4;
     display:flex;
     justify-content: center;
-    min-height:100vh;
-    max-height: fit-content;
+    height: fit-content;
 }
 /*-------------------------------------MAIN--------------------------------*/
 main{
@@ -14,7 +13,7 @@ main{
     background-color:#F0FDF4;
     display:flex;
     justify-content: center;
-    height:100vh;
+    height:fit-content;
 }
 
 
