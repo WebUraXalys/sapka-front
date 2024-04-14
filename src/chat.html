@@ -133,7 +133,7 @@
                         </div>
                         <div class="chat chat-start">
                             <div class="chat-image avatar">
-                                <div class="w-10 runded-full">
+                                <div class="w-10 rounded-full">
                                     <img alt="Tailwind CSS chat bubble component"
                                         src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                                 </div>
@@ -151,7 +151,7 @@
 
         <label class="input input-bordered flex items-center w-[440px] kg:w-[420px] md:w-[400px] sm:w-[330px] fixed bottom-3" x-data="{query: ''}">
             <input type="text" class="grow" placeholder="Поспілкуймось?" x-model="query"
-                @keydown.enter="$store.wschat.button_state.disable; $store.wschat.messages.messages.push({role: 'user', text: query}); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''" />
+                @keydown.enter="$store.wschat.button_state.disable ? null : $store.wschat.messages.messages.push({role: 'user', text: query}); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''" />
             <button x-bind:disabled="$store.wschat.button_state.disable"
                 @click="$store.wschat.button_state.disable = true; $store.wschat.messages.messages.push({role: 'user', text: query}); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1"
