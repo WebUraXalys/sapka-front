@@ -15,7 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         async function sendmail(mail, rid) {
-            return await axios.post('http://localhost:8000/auth/login?link_format='+window.location.origin+'/auth/user.html?token={key}', {email: mail, rid: rid})
+            return await axios.post('https://vira-api.ig4er.link/auth/login?link_format='+window.location.origin+'/auth/user.html?token={key}', {email: mail, rid: rid})
             .then(function (r) {return r.data.success})
             .catch(function (err) {return false});
         }
