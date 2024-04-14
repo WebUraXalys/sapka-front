@@ -54,9 +54,9 @@
                 active_chat: active_chat,
                 button_state: button_state,
             })
-            socket.onopen = function (event) {
-                socket.send(JSON.stringify({role: 'user', text: msg}));
-            }
+            // socket.onopen = function (event) {
+            //     socket.send(JSON.stringify({role: 'user', text: msg}));
+            // }
 
         })
     </script>
@@ -89,7 +89,7 @@
         <div class="contain overflow-y-scroll h-[500px]">
         <div class="chat chat-end">
                 <div class="chat-image avatar">
-                    <div class=" rounded-full">
+                    <div class="w-10 rounded-full">
                         <img alt="Tailwind CSS chat bubble component"
                             src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                     </div>
@@ -102,7 +102,7 @@
             </div>
             <div class="chat chat-start">
                 <div class="chat-image avatar">
-                    <div class=" rounded-full">
+                    <div class="w-10 rounded-full">
                         <img alt="Tailwind CSS chat bubble component"
                             src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                     </div>
@@ -127,7 +127,7 @@
                         </div>
                         <div class="chat chat-start">
                             <div class="chat-image avatar">
-                                <div class="w-10 rounded-full">
+                                <div class="w-10 runded-full">
                                     <img alt="Tailwind CSS chat bubble component"
                                         src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                                 </div>
