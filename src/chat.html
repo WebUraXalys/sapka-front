@@ -26,21 +26,25 @@
             let data = { messages: [msg] }
         
             let reactiveData = Alpine.reactive(data)
+            let button_state = Alpine.reactive({disable: true, consult: false})
 
             socket.onmessage = function(event) {
                 const recv = event.data;
                 const recv_json = JSON.parse(recv);
                 if (recv_json["role"] == "part") {
-
                     active_chat.obj.textContent = active_chat.obj.textContent + recv_json["text"];
                 }
                 if (recv_json["role"] == "finished") {
-                    reactiveData.messages.push(recv_json["text"]);
+                    reactiveData.messages.push({role: recv_json["role"], text: recv_json["text"]});
+                    button_state.disable = false;
                 }
                 if (recv_json["role"] == "end") {
-                    alert("not implemented in front")
+                    reactiveData.messages.push({role: recv_json["role"], text: recv_json["text"]});
+                    button_state.disable = true;
+                    button_state.consult = true;
                 }
             };
+
 
             Alpine.store('wschat', {
                 socket: socket,
@@ -48,6 +52,7 @@
                 inputParams: (location.pathname+location.search).substr(1),
                 msg: msg,
                 active_chat: active_chat,
+                button_state: button_state,
             })
             socket.onopen = function (event) {
                 socket.send(JSON.stringify({role: 'user', text: msg}));
@@ -81,64 +86,68 @@
                 </svg>
             </button>
         </div>
-        <div class="contain overflow-y-scroll h-4/5">
-           <div class="chat chat-end">
-            <div class="chat-image avatar">
-                <div class="w-10 rounded-full">
-                    <img alt="Tailwind CSS chat bubble component"
-                        src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                </div>
-            </div>
-            <!-- <button @click="$store.wschat.messages.messages.push('adsasdasdasd'); console.log($store.wschat.active_chat)">TESTTTSTTTSDF</button> -->
-            <div class="chat-header">
-                Ви
-            </div>
-            <div class="chat-bubble" id="firstmessage"></div>
-        </div>
-        <div class="chat chat-start">
-            <div class="chat-image avatar">
-                <div class="w-10 rounded-full">
-                    <img alt="Tailwind CSS chat bubble component"
-                        src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                </div>
-            </div>
-            <div class="chat-header">
-                Віра Асистент
-            </div>
-            <div class="chat-bubble" id="123"></div>
-        </div>
-        <template x-for="(message, i) in messages">
-            <template x-if="i > 1 && i%2==0">
-                <div>
-                    <div class="chat chat-end">
-                        <div class="chat-image avatar">
-                            <div class="w-10 rounded-full">
-                                <img alt="Tailwind CSS chat bubble component"
-                                    src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                            </div>
-                        </div>
-                        <div class="chat-header">Ви</div>
-                        <div class="chat-bubble" x-text="message"></div>
-                    </div>
-                    <div class="chat chat-start">
-                        <div class="chat-image avatar">
-                            <div class="w-10 rounded-full">
-                                <img alt="Tailwind CSS chat bubble component"
-                                    src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                            </div>
-                        </div>
-                        <div class="chat-header">Віра Асистент</div>
-                        <div class="chat-bubble" x-init="let cbs = document.querySelectorAll('.chat-bubble'); $store.wschat.active_chat.obj = cbs[cbs.length - 1]"></div>
+        <div class="contain overflow-y-scroll h-[85%]">
+        <div class="chat chat-end">
+                <div class="chat-image avatar">
+                    <div class="w-10 rounded-full">
+                        <img alt="Tailwind CSS chat bubble component"
+                            src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                     </div>
                 </div>
+                <!-- <button @click="$store.wschat.messages.messages.push('adsasdasdasd'); console.log($store.wschat.active_chat)">TESTTTSTTTSDF</button> -->
+                <div class="chat-header">
+                    Ви
+                </div>
+                <div class="chat-bubble" id="firstmessage"></div>
+            </div>
+            <div class="chat chat-start">
+                <div class="chat-image avatar">
+                    <div class="w-10 rounded-full">
+                        <img alt="Tailwind CSS chat bubble component"
+                            src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    </div>
+                </div>
+                <div class="chat-header">
+                    Віра Асистент
+                </div>
+                <div class="chat-bubble" id="123"></div>
+            </div>
+            <template x-for="(message, i) in messages">
+                <template x-if="i > 1 && i%2==0">
+                    <div>
+                        <div class="chat chat-end">
+                            <div class="chat-image avatar">
+                                <div class="w-10 rounded-full">
+                                    <img alt="Tailwind CSS chat bubble component"
+                                        src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                </div>
+                            </div>
+                            <div class="chat-header">Ви</div>
+                            <div class="chat-bubble" x-text="message.text" ></div>
+                        </div>
+                        <div class="chat chat-start">
+                            <div class="chat-image avatar">
+                                <div class="w-10 rounded-full">
+                                    <img alt="Tailwind CSS chat bubble component"
+                                        src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                </div>
+                            </div>
+                            <div class="chat-header">Віра Асистент</div>
+                            <div class="chat-bubble" x-init="let cbs = document.querySelectorAll('.chat-bubble'); $store.wschat.active_chat.obj = cbs[cbs.length - 1]"></div>
+                        </div>
+                    </div>
+                </template>
             </template>
-        </template> 
+            <div x-show="$store.wschat.button_state.consult" class="btn customized-button w-52 mt-5">Консультація з психологом</div>
+            </div>
+            
         </div>
 
         <label class="input input-bordered flex items-center w-[440px] kg:w-[420px] md:w-[400px] sm:w-[330px] fixed bottom-3" x-data="{query: ''}">
             <input type="text" class="grow" placeholder="Поспілкуймось?" x-model="query"
-                @keydown.enter="$store.wschat.messages.messages.push(query); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''" />
-            <a @click="$store.wschat.messages.messages.push(query); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''">
+                @keydown.enter="$store.wschat.button_state.disable = true; $store.wschat.messages.messages.push({role: 'user', text: query}); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''" />
+            <a x-bind:disabled="$store.wschat.button_state.disable"
+                @click="$store.wschat.button_state.disable = true; $store.wschat.messages.messages.push({role: 'user', text: query}); $store.wschat.socket.send(JSON.stringify({role: 'user', text: query})); query = ''">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1"
                     stroke="currentColor" class="w-6 h-6 opacity-40">
                     <path stroke-linecap="round" stroke-linejoin="round"
